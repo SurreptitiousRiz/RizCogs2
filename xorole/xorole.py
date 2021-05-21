@@ -4,7 +4,7 @@ from redbot.core import checks
 import asyncio
 from collections import defaultdict
 import discord
-import dataIO
+from cogs.utils.dataIO import dataIO
 from redbot.core.utils.chat_formatting import box, error, info, pagify, warning
 
 JSON = 'data/xorole.json'
