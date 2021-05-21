@@ -70,7 +70,7 @@ BaseCog = getattr(commands, "Cog", object)
 class XORole(BaseCog):
     def __init__(self, bot):
         self.bot = bot
-        self.settings = ''
+        self.settings = {}
         try:
             with open(JSON, 'a+') as json_file:
                 self.settings = json.load(json_file)
