@@ -284,14 +284,14 @@ class XORole(BaseCog):
                     lines.append('\n')
 
             if len(lines) == 1:
-                await self.bot.say('No roles are available to assign.')
+                await self.Context.send('No roles are available to assign.')
                 return
 
             for page in pagify('\n'.join(lines)):
-                await self.bot.say(box(page))
+                await self.Context.send(box(page))
 
         except XORoleException as e:
-            await self.bot.say(warning(*e.args))
+            await self.Context.send(warning(*e.args))
 
     @xorole.command(name='add', pass_context=True)
     async def xorole_add(self, ctx, *, role: str):
@@ -306,7 +306,7 @@ class XORole(BaseCog):
             existing = self.get_roleset_memberships(member, roleset)
 
             if role in member.roles and len(existing) == 1:
-                m = await self.bot.say('You already have that role; nothing to do.')
+                m = await self.Context.send('You already have that role; nothing to do.')
                 messages.add(m)
                 return
 
@@ -315,11 +315,11 @@ class XORole(BaseCog):
 
             await self.role_add_remove(member, to_add, to_remove)
 
-            m = await self.bot.say("Role in roleset %s switched to %s." % (roleset, role.name))
+            m = await self.Context.send("Role in roleset %s switched to %s." % (roleset, role.name))
             messages.add(m)
 
         except XORoleException as e:
-            m = await self.bot.say(warning(*e.args))
+            m = await self.Context.send(warning(*e.args))
             messages.add(m)
         finally:
             delay = self.settings.get(server.id, {}).get('AUTODELETE', 0)
@@ -339,7 +339,7 @@ class XORole(BaseCog):
             role = self.find_role(server, role_or_roleset, notfound_ok=True)
             if role:
                 if role not in member.roles:
-                    m = await self.bot.say("You don't have that role; nothing to do.")
+                    m = await self.Context.send("You don't have that role; nothing to do.")
                     messages.add(m)
                     return
 
@@ -352,14 +352,14 @@ class XORole(BaseCog):
                 await self.role_add_remove(member, to_remove=to_remove)
                 plural = 'roles' if len(to_remove) > 1 else 'role'
                 rlist = ', '.join(r.name for r in to_remove)
-                m = await self.bot.say('Removed the %s: %s.' % (plural, rlist))
+                m = await self.Context.send('Removed the %s: %s.' % (plural, rlist))
             else:
-                m = await self.bot.say("You don't belong to any roles in the %s roleset." % role_or_roleset)
+                m = await self.Context.send("You don't belong to any roles in the %s roleset." % role_or_roleset)
 
             messages.add(m)
 
         except XORoleException as e:
-            m = await self.bot.say(warning(*e.args))
+            m = await self.Context.send(warning(*e.args))
             messages.add(m)
         finally:
             delay = self.settings.get(server.id, {}).get('AUTODELETE', 0)
@@ -386,7 +386,7 @@ class XORole(BaseCog):
             roles = list(filter(None, roles))
 
             if not 0 < len(roles) <= 2:
-                m = await self.bot.say(warning("Cannot toggle within the '%s' roleset." % roleset))
+                m = await self.Context.send(warning("Cannot toggle within the '%s' roleset." % roleset))
                 messages.add(m)
                 return
 
@@ -404,7 +404,7 @@ class XORole(BaseCog):
                 to_remove = self.get_roleset_memberships(member, roleset)
 
                 if len(to_remove) != 1:
-                    m = await self.bot.say(warning("You must have one role in %s to toggle it." % roleset))
+                    m = await self.Context.send(warning("You must have one role in %s to toggle it." % roleset))
                     messages.add(m)
                     return
 
@@ -414,16 +414,16 @@ class XORole(BaseCog):
             await self.role_add_remove(member, to_add, to_remove)
 
             if to_add and to_remove:
-                m = await self.bot.say('Toggled from %s to %s.' % (to_remove[0], to_add[0]))
+                m = await self.Context.send('Toggled from %s to %s.' % (to_remove[0], to_add[0]))
             elif to_add:
-                m = await self.bot.say("Role '%s' added." % to_add[0])
+                m = await self.Context.send("Role '%s' added." % to_add[0])
             elif to_remove:
-                m = await self.bot.say("Role '%s' removed." % to_remove[0])
+                m = await self.Context.send("Role '%s' removed." % to_remove[0])
 
             messages.add(m)
 
         except XORoleException as e:
-            m = await self.bot.say(warning(*e.args))
+            m = await self.Context.send(warning(*e.args))
             messages.add(m)
         finally:
             delay = self.settings.get(server.id, {}).get('AUTODELETE', 0)
@@ -444,16 +444,16 @@ class XORole(BaseCog):
         server = ctx.message.guild
         try:
             if len(name.split()) > 1:
-                await self.bot.say('For usability reasons, whitespace is not permitted in roleset names. Try again.')
+                await self.Context.send('For usability reasons, whitespace is not permitted in roleset names. Try again.')
                 return
             elif name.lower() in ("all", "server"):
-                await self.bot.say('The name "%s" is reserved; please pick something else.' % name)
+                await self.Context.send('The name "%s" is reserved; please pick something else.' % name)
                 return
 
             self.add_roleset(server, name)
-            await self.bot.say("Roleset '%s' created." % name)
+            await self.Context.send("Roleset '%s' created." % name)
         except XORoleException as e:
-            await self.bot.say(warning(*e.args))
+            await self.Context.send(warning(*e.args))
 
     @checks.mod_or_permissions(administrator=True)
     @xoroleset.command(name='rmroleset', pass_context=True)
@@ -462,9 +462,9 @@ class XORole(BaseCog):
         server = ctx.message.guild
         try:
             self.remove_roleset(server, name)
-            await self.bot.say("Roleset '%s' removed." % name)
+            await self.Context.send("Roleset '%s' removed." % name)
         except XORoleException as e:
-            await self.bot.say(warning(*e.args))
+            await self.Context.send(warning(*e.args))
 
     @checks.mod_or_permissions(administrator=True)
     @xoroleset.command(name='renroleset', pass_context=True)
@@ -473,19 +473,19 @@ class XORole(BaseCog):
         server = ctx.message.guild
         try:
             if len(newname.split()) > 1:
-                await self.bot.say('For usability reasons, whitespace is not permitted in roleset names. Try again.')
+                await self.Context.send('For usability reasons, whitespace is not permitted in roleset names. Try again.')
                 return
             elif newname.lower() in ("all", "server"):
-                await self.bot.say('The name "%s" is reserved; please pick something else.' % newname)
+                await self.Context.send('The name "%s" is reserved; please pick something else.' % newname)
                 return
 
             rsn, rsl = self.get_roleset(server, oldname)
             rolesets = self.get_rolesets(server)
             rolesets[newname] = rolesets.pop(rsn)
             self.update_rolesets(server, rolesets)
-            await self.bot.say("Rename successful.")
+            await self.Context.send("Rename successful.")
         except XORoleException as e:
-            await self.bot.say(warning(*e.args))
+            await self.Context.send(warning(*e.args))
 
     @checks.mod_or_permissions(administrator=True)
     @xoroleset.command(name='audit', pass_context=True)
@@ -515,17 +515,17 @@ class XORole(BaseCog):
                 lines.append('\n')
 
             if not lines:
-                await self.bot.say('All roleset memberships are singular.')
+                await self.Context.send('All roleset memberships are singular.')
                 return
 
             if lines[-1] == '\n':
                 lines.pop()
 
             for page in pagify('\n'.join(lines)):
-                await self.bot.say(box(page))
+                await self.Context.send(box(page))
 
         except XORoleException as e:
-            await self.bot.say(warning(*e.args))
+            await self.Context.send(warning(*e.args))
 
     @checks.mod_or_permissions(administrator=True)
     @xoroleset.command(name='addroles', aliases=['addrole'], pass_context=True)
@@ -580,10 +580,10 @@ class XORole(BaseCog):
                 if any((' ' in x) for x in notfound) and len(notfound) == 1:
                     msg.append('Remember that roles must be seperated by commas, not spaces.')
 
-            await self.bot.say('\n'.join(msg))
+            await self.Context.send('\n'.join(msg))
 
         except XORoleException as e:
-            await self.bot.say(warning(*e.args))
+            await self.Context.send(warning(*e.args))
 
     @checks.mod_or_permissions(administrator=True)
     @xoroleset.command(name='rmroles', aliases=['rmrole'], pass_context=True)
@@ -620,10 +620,10 @@ class XORole(BaseCog):
             if notfound:
                 msg.append('Could not find these role(s): %s.' % ', '.join(("'%s'" % x) for x in notfound))
 
-            await self.bot.say('\n'.join(msg))
+            await self.Context.send('\n'.join(msg))
 
         except XORoleException as e:
-            await self.bot.say(warning(*e.args))
+            await self.Context.send(warning(*e.args))
 
     @checks.mod_or_permissions(administrator=True)
     @xoroleset.command(name='autodelete', pass_context=True)
@@ -639,9 +639,9 @@ class XORole(BaseCog):
             delay = settings.get('AUTODELETE', 0)
 
             if delay:
-                return await self.bot.say("Auto-delete delay is currently %is." % delay)
+                return await self.Context.send("Auto-delete delay is currently %is." % delay)
             else:
-                return await self.bot.say("Auto-delete is currently disabled.")
+                return await self.Context.send("Auto-delete is currently disabled.")
 
         elif not (0 <= delay <= 60):
             return await self.bot.send_cmd_help(ctx)
@@ -650,9 +650,9 @@ class XORole(BaseCog):
         self.update_settings(server, settings)
 
         if delay:
-            return await self.bot.say("Auto-delete delay set to %is." % delay)
+            return await self.Context.send("Auto-delete delay set to %is." % delay)
         else:
-            return await self.bot.say("Auto-delete disabled.")
+            return await self.Context.send("Auto-delete disabled.")
 
     @checks.mod_or_permissions(administrator=True)
     @xoroleset.command(name='autoswitch', pass_context=True)
@@ -704,7 +704,7 @@ class XORole(BaseCog):
                 return on_or_Off(current_values[name])
 
         if on_off and not rolesets:  # missing parameters
-            await self.bot.say("No rolesets specified.")
+            await self.Context.send("No rolesets specified.")
         elif 'all' in rolesets:  # populate "all"
             rolesets.remove('all')
             rolesets.update(all_rolesets)
@@ -749,7 +749,7 @@ class XORole(BaseCog):
             for rsn in sorted(rolesets - all_rolesets):
                 lines.append("- " + rsn)
 
-        await self.bot.say('\n'.join(lines))
+        await self.Context.send('\n'.join(lines))
 
         self.update_settings(server, settings)
 
