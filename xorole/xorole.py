@@ -256,7 +256,7 @@ class XORole(BaseCog):
     @xorole.command(name='list', pass_context=True)
     async def xorole_list(self, ctx, *, roleset: str = None):
         "Shows the available roles to in the server or a specific roleset."
-        server = ctx.message.server
+        server = ctx.message.guild
         server_roles = {r.id: r for r in server.roles}
 
         try:
@@ -296,7 +296,7 @@ class XORole(BaseCog):
     @xorole.command(name='add', pass_context=True)
     async def xorole_add(self, ctx, *, role: str):
         "Assigns a role to you, removing any others in the same roleset."
-        server = ctx.message.server
+        server = ctx.message.guild
         member = ctx.message.author
         messages = {ctx.message}
 
@@ -331,7 +331,7 @@ class XORole(BaseCog):
     @xorole.command(name='remove', pass_context=True)
     async def xorole_remove(self, ctx, *, role_or_roleset: str):
         "Removes a specific role or any in a roleset from you."
-        server = ctx.message.server
+        server = ctx.message.guild
         member = ctx.message.author
         messages = {ctx.message}
 
@@ -371,7 +371,7 @@ class XORole(BaseCog):
     @xorole.command(name='toggle', pass_context=True)
     async def xorole_toggle(self, ctx, *, role_or_roleset: str):
         "Toggles a role in a single-role roleset on or off, or between two roles in a roleset."
-        server = ctx.message.server
+        server = ctx.message.guild
         member = ctx.message.author
         messages = {ctx.message}
 
@@ -441,7 +441,7 @@ class XORole(BaseCog):
     @xoroleset.command(name='addroleset', pass_context=True)
     async def xoroleset_addroleset(self, ctx, *, name: str):
         "Adds a roleset."
-        server = ctx.message.server
+        server = ctx.message.guild
         try:
             if len(name.split()) > 1:
                 await self.bot.say('For usability reasons, whitespace is not permitted in roleset names. Try again.')
@@ -459,7 +459,7 @@ class XORole(BaseCog):
     @xoroleset.command(name='rmroleset', pass_context=True)
     async def xoroleset_rmroleset(self, ctx, *, name: str):
         "Removes a roleset."
-        server = ctx.message.server
+        server = ctx.message.guild
         try:
             self.remove_roleset(server, name)
             await self.bot.say("Roleset '%s' removed." % name)
@@ -470,7 +470,7 @@ class XORole(BaseCog):
     @xoroleset.command(name='renroleset', pass_context=True)
     async def xoroleset_renroleset(self, ctx, oldname: str, newname: str):
         "Renames a roleset."
-        server = ctx.message.server
+        server = ctx.message.guild
         try:
             if len(newname.split()) > 1:
                 await self.bot.say('For usability reasons, whitespace is not permitted in roleset names. Try again.')
@@ -492,7 +492,7 @@ class XORole(BaseCog):
     async def xoroleset_audit(self, ctx):
         "Shows members with more than one role in a xorole roleset"
         lines = []
-        server = ctx.message.server
+        server = ctx.message.guild
 
         try:
             for rsn, rsd in self.get_rolesets(server).items():
@@ -533,7 +533,7 @@ class XORole(BaseCog):
         """Adds one or more roles to a xorole roleset.
 
         Takes names or IDs seperated by commas."""
-        server = ctx.message.server
+        server = ctx.message.guild
         msg = []
         try:
             roles = roles.split(',')
@@ -591,7 +591,7 @@ class XORole(BaseCog):
         """Removes one or more roles from a xorole roleset.
 
         Takes role names or IDs seperated by commas."""
-        server = ctx.message.server
+        server = ctx.message.guild
         msg = []
         try:
             roles = roles.split(',')
@@ -632,7 +632,7 @@ class XORole(BaseCog):
 
         Max delay is 60s. 0 to disable, leave blank to show the current setting.
         """
-        server = ctx.message.server
+        server = ctx.message.guild
         settings = self.get_settings(server)
 
         if delay is None:
@@ -672,7 +672,7 @@ class XORole(BaseCog):
         - SERVER: changes the server default
         """
 
-        server = ctx.message.server
+        server = ctx.message.guild
         settings = self.get_settings(server)
         rolesets_data = settings.get("ROLESETS", {})
 
