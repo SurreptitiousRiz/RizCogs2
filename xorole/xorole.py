@@ -70,8 +70,11 @@ BaseCog = getattr(commands, "Cog", object)
 class XORole(BaseCog):
     def __init__(self, bot):
         self.bot = bot
-        with open(JSON, 'a+') as json_file:
-            self.settings = json.load(json_file)
+        try:
+            with open(JSON, 'a+') as json_file:
+                self.settings = json.load(json_file)
+        except:
+            print('oof')
         self.conf = Config.get_conf(self, identifier=69696969)
 
         if self.upgrade_data():
@@ -79,8 +82,11 @@ class XORole(BaseCog):
         self.debug_log_channel = bot.get_channel(582941546488397829)
 
     def save(self):
-        with open(JSON, 'a+') as outputfile:
-            json.dump(self.settings, outputfile)
+        try:
+            with open(JSON, 'a+') as outputfile:
+                json.dump(self.settings, outputfile)
+        except:
+            print('oof')
 
     def upgrade_data(self) -> bool:
         if self.settings.get("SCHEMA_VER", 1) >= 2:
