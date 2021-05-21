@@ -1,0 +1,9 @@
+{
+    "author" : ["Riz (Riz#9000)"],
+    "install_msg" : "Lame cogs for Sullie",
+    "name" : "RizCogs",
+    "short" : "Lame Cogs",
+    "requirements": [],
+    "description" : "Role cogs",
+    "tags" : ["Tools", "Roles", "Utility"]
+}

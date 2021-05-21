@@ -1,0 +1,15 @@
+{
+    "author": ["Riz (Riz#9000)"],
+    "install_msg": "Big Nice",
+    "name": "mycog",
+    "short": "whore",
+    "requirements": ["dataIO"],
+    "description": "This cog sucks dick",
+    "permissions" : ["Manage Messages", "Manage Roles"],
+    "tags": [
+        "role",
+        "roles",
+        "tools",
+        "utility"
+    ]
+}
