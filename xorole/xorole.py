@@ -8,7 +8,7 @@ import discord
 import json
 from redbot.core.utils.chat_formatting import box, error, info, pagify, warning
 
-JSON = 'data/xorole.json'
+JSON = 'xorole.json'
 
 # Analytics core
 # import zlib, base64
@@ -70,7 +70,6 @@ BaseCog = getattr(commands, "Cog", object)
 class XORole(BaseCog):
     def __init__(self, bot):
         self.bot = bot
-
         with open(JSON, 'w') as json_file:
             self.settings = json.load(json_file)
         self.conf = Config.get_conf(self, identifier=69696969)
