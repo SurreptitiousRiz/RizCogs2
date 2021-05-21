@@ -70,7 +70,7 @@ BaseCog = getattr(commands, "Cog", object)
 class XORole(BaseCog):
     def __init__(self, bot):
         self.bot = bot
-        with open(JSON, 'w') as json_file:
+        with open(JSON, 'a+') as json_file:
             self.settings = json.load(json_file)
         self.conf = Config.get_conf(self, identifier=69696969)
 
@@ -79,7 +79,7 @@ class XORole(BaseCog):
         self.debug_log_channel = bot.get_channel(582941546488397829)
 
     def save(self):
-        with open(JSON, 'w') as outputfile:
+        with open(JSON, 'a+') as outputfile:
             json.dump(self.settings, outputfile)
 
     def upgrade_data(self) -> bool:
