@@ -4,7 +4,7 @@ from redbot.core import checks
 import asyncio
 from collections import defaultdict
 import discord
-import redbot.core.data_manager
+import dataIO
 from redbot.core.utils.chat_formatting import box, error, info, pagify, warning
 
 JSON = 'data/xorole.json'
@@ -69,7 +69,7 @@ BaseCog = getattr(commands, "Cog", object)
 class XORole(BaseCog):
     def __init__(self, bot):
         self.bot = bot
-        self.settings = redbot.core.data_manager.data_manager.load_json(JSON)
+        self.settings = dataIO.load_json(JSON)
         self.conf = Config.get_conf(self, identifier=69696969)
 
         if self.upgrade_data():
@@ -77,7 +77,7 @@ class XORole(BaseCog):
         self.debug_log_channel = bot.get_channel(582941546488397829)
 
     def save(self):
-        redbot.core.data_manager.data_manager.save_json(JSON, self.settings)
+        dataIO.save_json(JSON, self.settings)
 
     def upgrade_data(self) -> bool:
         if self.settings.get("SCHEMA_VER", 1) >= 2:
