@@ -715,7 +715,7 @@ class XORole(BaseCog):
             on_off = None
         elif on_off:
             # raises BadArgument, which in turn shows the command's help
-            on_off = await ctx.command.do_conversion(ctx, bool, on_off)
+            on_off = await bool(on_off)
 
         lines = []
 
