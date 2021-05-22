@@ -181,7 +181,7 @@ class XORole(BaseCog):
     def roleset_of_role(self, role, notfound_ok=False):
         rid = role.id
 
-        for rsn, rsd in self.get_rolesets(role.server).items():
+        for rsn, rsd in self.get_rolesets(role.guild).items():
             if rid in rsd.get("ROLES", ()):
                 return rsn
 
@@ -189,7 +189,7 @@ class XORole(BaseCog):
             raise NoRolesetsFound("The '%s' role doesn't belong to any rolesets" % role.name)
 
     def get_roleset_memberships(self, member, roleset):
-        rsn, rsl = self.get_roleset(member.server, roleset)
+        rsn, rsl = self.get_roleset(member.guild, roleset)
         rslset = set(rsl)
         return [r for r in member.roles if r.id in rslset]
 
@@ -229,8 +229,8 @@ class XORole(BaseCog):
             try:
                 await self.bot.replace_roles(member, *list(replace_with))
             except discord.errors.Forbidden:
-                if not (member.server.me.server_permissions.manage_roles or
-                        member.server.me.server_permissions.administrator):
+                if not (member.guild.me.server_permissions.manage_roles or
+                        member.guild.me.server_permissions.administrator):
                     err = "I don't have permission to manage roles."
                 else:
                     err = ('a role I tried to assign or remove is too high for me to do so.')
@@ -759,8 +759,8 @@ class XORole(BaseCog):
             settings = self.get_settings(before.server)
             default_autoswitch = settings.get("AUTOSWITCH", False)
             added_roles = set(after.roles) - set(before.roles)
-            have_perms = (after.server.me.server_permissions.manage_roles or
-                          after.server.me.server_permissions.administrator)
+            have_perms = (after.guild.me.server_permissions.manage_roles or
+                          after.guild.me.server_permissions.administrator)
 
             if not (added_roles and have_perms):
                 return
