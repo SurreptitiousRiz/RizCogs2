@@ -754,7 +754,8 @@ class XORole(BaseCog):
         self.update_settings(server, settings)
 
     async def on_member_update(self, before, after):
-        "handle autoswitch"
+        print("handle autoswitch")
+        print(self.settings)
         if before.roles != after.roles and before.server.id in self.settings:
             print('trying to auto update roles')
             settings = self.get_settings(before.server)
