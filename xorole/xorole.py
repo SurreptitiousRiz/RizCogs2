@@ -75,7 +75,7 @@ class XORole(BaseCog):
             with open(JSON, 'a+') as json_file:
                 self.settings = json.load(json_file)
         except:
-            print('oof')
+            print('could not open xorole.json')
         self.conf = Config.get_conf(self, identifier=69696969)
 
         if self.upgrade_data():
@@ -87,7 +87,7 @@ class XORole(BaseCog):
             with open(JSON, 'a+') as outputfile:
                 json.dump(self.settings, outputfile)
         except:
-            print('oof')
+            print('xorole.json not saved')
 
     def upgrade_data(self) -> bool:
         if self.settings.get("SCHEMA_VER", 1) >= 2:
@@ -756,6 +756,7 @@ class XORole(BaseCog):
     async def on_member_update(self, before, after):
         "handle autoswitch"
         if before.roles != after.roles and before.server.id in self.settings:
+            print('trying to auto update roles')
             settings = self.get_settings(before.server)
             default_autoswitch = settings.get("AUTOSWITCH", False)
             added_roles = set(after.roles) - set(before.roles)
@@ -763,6 +764,7 @@ class XORole(BaseCog):
                           after.guild.me.server_permissions.administrator)
 
             if not (added_roles and have_perms):
+                print('role not in role set or not correct perms')
                 return
 
             for role in added_roles:
@@ -771,7 +773,8 @@ class XORole(BaseCog):
                     existing = self.get_roleset_memberships(before, rsn)
 
                     if existing and settings["ROLESETS"][rsn].get("AUTOSWITCH", default_autoswitch):
-                        await self.bot.remove_roles(after, *existing)
+                        print('removing roles')
+                        await after.remove_roles(*existing)
 
                 except Exception:
                     pass  # silently ignore errors
