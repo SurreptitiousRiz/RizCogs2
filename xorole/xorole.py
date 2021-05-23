@@ -755,7 +755,8 @@ class XORole(BaseCog):
         await ctx.send('\n'.join(lines))
 
         self.update_settings(server, settings)
-
+        
+    @commands.Cog.listener("on_member_update")
     async def on_member_update(self, before, after):
         print("handle autoswitch")
         print(self.settings)
