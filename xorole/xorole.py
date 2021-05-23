@@ -227,7 +227,7 @@ class XORole(BaseCog):
 
         if roles != replace_with:
             try:
-                await member.edit(roles, replace_with)
+                await member.edit(roles=replace_with)
             except discord.errors.Forbidden:
                 if not (member.guild.me.server_permissions.manage_roles or
                         member.guild.me.server_permissions.administrator):
