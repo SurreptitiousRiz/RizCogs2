@@ -8,6 +8,8 @@ import discord
 import json
 from redbot.core.utils.chat_formatting import box, error, info, pagify, warning
 
+intents = discord.Intents().all()
+client = discord.Client(intents=intents)
 JSON = 'xorole.json'
 
 # Analytics core
