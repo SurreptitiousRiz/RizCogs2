@@ -8,8 +8,7 @@ import discord
 import json
 from redbot.core.utils.chat_formatting import box, error, info, pagify, warning
 
-intents = discord.Intents().all()
-client = discord.Client(intents=intents)
+
 JSON = 'xorole.json'
 
 # Analytics core
@@ -73,6 +72,8 @@ class XORole(BaseCog):
     def __init__(self, bot):
         self.bot = bot
         self.settings = {}
+        intents = discord.Intents().all()
+        bot = discord.Client(intents=intents)
         try:
             with open(JSON, 'a+') as json_file:
                 self.settings = json.load(json_file)
