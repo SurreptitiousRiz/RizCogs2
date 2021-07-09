@@ -79,7 +79,7 @@ class XORole(BaseCog):
         os.umask(0)
         if not os.path.exists("data"):
             os.mkdir("data")
-        f = open(JSON,)
+        f = open(JSON, 'a+')
         self.settings = json.load(f)
         print(self.settings)
         #except:
@@ -93,7 +93,7 @@ class XORole(BaseCog):
 
     def save(self):
         try:
-            with open(JSON, 'a+') as outputfile:
+            with open(JSON, 'w') as outputfile:
                 json.dump(self.settings, outputfile)
         except:
             print('xorole.json not saved')
