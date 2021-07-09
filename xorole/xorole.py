@@ -96,7 +96,7 @@ class XORole(BaseCog):
     def save(self):
         try:
             with open(JSON, 'w') as outputfile:
-                json.dump(self.settings, outputfile)
+                json.dumps(self.settings, outputfile)
         except:
             print('xorole.json not saved')
 
