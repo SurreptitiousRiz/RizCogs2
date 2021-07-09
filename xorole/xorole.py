@@ -82,7 +82,7 @@ class XORole(BaseCog):
             print("data directory created")       
         try:
             f = open(JSON,)
-            self.settings = json.loads(f)
+            self.settings = json.load(f)
             print(self.settings)          
         except:
             print('No settings in json file')
@@ -96,7 +96,7 @@ class XORole(BaseCog):
     def save(self):
         try:
             with open(JSON, 'w') as outputfile:
-                outputfile.write(json.dumps(self.settings))
+                outputfile.write(json.dump(self.settings))
         except:
             print('xorole.json not saved')
 
