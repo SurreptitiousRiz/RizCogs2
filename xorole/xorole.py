@@ -10,7 +10,7 @@ import os, os.path
 from redbot.core.utils.chat_formatting import box, error, info, pagify, warning
 
 
-JSON = '/data/xorole.json'
+JSON = 'data/xorole.json'
 
 # Analytics core
 # import zlib, base64
@@ -77,8 +77,8 @@ class XORole(BaseCog):
         bot = discord.Client(intents=intents)
         #try:
         os.umask(0)
-        if not os.path.exists("/data"):
-         os.mkdir("/data")
+        if not os.path.exists("data"):
+         os.mkdir("data")
         with open(JSON, 'a+') as json_file:
             self.settings = json.load(json_file)
         #except:
