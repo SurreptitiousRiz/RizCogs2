@@ -79,11 +79,12 @@ class XORole(BaseCog):
         os.umask(0)
         if not os.path.exists("data"):
             os.mkdir("data")
-            f = open(JSON,)
-            self.settings = json.load(f)
-            print(self.settings)
+        f = open(JSON,)
+        self.settings = json.load(f)
+        print(self.settings)
         #except:
-            print('could not open xorole.json')
+        #print('could not open xorole.json')
+        
         self.conf = Config.get_conf(self, identifier=69696969)
 
         if self.upgrade_data():
