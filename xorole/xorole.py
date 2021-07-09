@@ -75,15 +75,13 @@ class XORole(BaseCog):
         self.settings = {}
         intents = discord.Intents().all()
         bot = discord.Client(intents=intents)
-        #try:
-        os.umask(0)
-        
-        #try:
+
+        os.umask(0)       
         if not os.path.exists("data"):
             os.mkdir("data")
-            print("data directory created")
-        f = open(JSON, 'r+')
+            print("data directory created")       
         try:
+            f = open(JSON, 'r+')
             self.settings = json.load(f)
             print(self.settings)
         except:
