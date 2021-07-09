@@ -9,7 +9,7 @@ import json
 from redbot.core.utils.chat_formatting import box, error, info, pagify, warning
 
 
-JSON = '/xorole.json'
+JSON = '~/home/brendon/.local/share/Red-DiscordBot/data/redbotnyx/cogs/XORole/xorole.json'
 
 # Analytics core
 # import zlib, base64
