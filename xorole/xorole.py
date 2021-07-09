@@ -83,7 +83,7 @@ class XORole(BaseCog):
         try:
             f = open(JSON, 'r+')
             self.settings = json.load(f)
-            print(self.settings)
+            print(self.settings)          
         except:
             print('No settings in json file')
         
@@ -266,6 +266,7 @@ class XORole(BaseCog):
 
     @xorole.command(name='list', pass_context=True)
     async def xorole_list(self, ctx, *, roleset: str = None):
+        self.update_settings(ctx.message.guild, self.settings)
         "Shows the available roles to in the server or a specific roleset."
         server = ctx.message.guild
         server_roles = {r.id: r for r in server.roles}
