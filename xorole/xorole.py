@@ -80,12 +80,12 @@ class XORole(BaseCog):
         if not os.path.exists("data"):
             os.mkdir("data")
             print("data directory created")       
-        try:
-            f = open(JSON,)
-            self.settings = json.loads(f)
-            print(self.settings)          
-        except:
-            print('No settings in json file')
+        #try:
+        f = open(JSON,)
+        self.settings = json.loads(f)
+        print(self.settings)          
+        #except:
+            #print('No settings in json file')
         
         self.conf = Config.get_conf(self, identifier=69696969)
 
