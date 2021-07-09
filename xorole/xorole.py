@@ -74,11 +74,11 @@ class XORole(BaseCog):
         self.settings = {}
         intents = discord.Intents().all()
         bot = discord.Client(intents=intents)
-        try:
-            with open(JSON, 'a+') as json_file:
-                self.settings = json.load(json_file)
-        except:
-            print('could not open xorole.json')
+        #try:
+        with open(JSON, 'a+') as json_file:
+            self.settings = json.load(json_file)
+        #except:
+            #print('could not open xorole.json')
         self.conf = Config.get_conf(self, identifier=69696969)
 
         if self.upgrade_data():
