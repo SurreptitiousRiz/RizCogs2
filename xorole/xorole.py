@@ -75,15 +75,17 @@ class XORole(BaseCog):
         self.settings = {}
         intents = discord.Intents().all()
         bot = discord.Client(intents=intents)
-
-        os.umask(0)       
+        #try:
+        os.umask(0)
+        
+        #try:
         if not os.path.exists("data"):
             os.mkdir("data")
-            print("data directory created")       
+            print("data directory created")    
         try:
-            f = open(JSON,)
+            f = open(JSON, 'r+')
             self.settings = json.load(f)
-            print(self.settings)          
+            print(self.settings)
         except:
             print('No settings in json file')
         
@@ -96,7 +98,7 @@ class XORole(BaseCog):
     def save(self):
         try:
             with open(JSON, 'w') as outputfile:
-                outputfile.write(json.dump(self.settings))
+                json.dump(self.settings, outputfile)
         except:
             print('xorole.json not saved')
 
@@ -266,7 +268,6 @@ class XORole(BaseCog):
 
     @xorole.command(name='list', pass_context=True)
     async def xorole_list(self, ctx, *, roleset: str = None):
-        self.update_settings(ctx.message.guild, self.settings)
         "Shows the available roles to in the server or a specific roleset."
         server = ctx.message.guild
         server_roles = {r.id: r for r in server.roles}
