@@ -81,7 +81,7 @@ class XORole(BaseCog):
             os.mkdir("data")
             print("data directory created")       
         try:
-            f = open(JSON, 'r+')
+            f = open(JSON,)
             self.settings = json.loads(f)
             print(self.settings)          
         except:
