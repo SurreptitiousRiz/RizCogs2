@@ -81,6 +81,7 @@ class XORole(BaseCog):
             os.mkdir("data")
             f = open(JSON,)
             self.settings = json.load(f)
+            print(self.settings)
         #except:
             print('could not open xorole.json')
         self.conf = Config.get_conf(self, identifier=69696969)
