@@ -77,14 +77,15 @@ class XORole(BaseCog):
         bot = discord.Client(intents=intents)
         #try:
         os.umask(0)
+        
+        #try:
         if not os.path.exists("data"):
             os.mkdir("data")
         f = open(JSON, 'a+')
-        try:
-            self.settings = json.load(f)
-            print(self.settings)
-        except:
-            print('No settings in json file')
+        self.settings = json.load(f)
+        print(self.settings)
+        #except:
+        print('No settings in json file')
         
         self.conf = Config.get_conf(self, identifier=69696969)
 
