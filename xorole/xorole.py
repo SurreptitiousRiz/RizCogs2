@@ -76,6 +76,7 @@ class XORole(BaseCog):
         intents = discord.Intents().all()
         bot = discord.Client(intents=intents)
         #try:
+        os.umask(0)
         if not os.path.exists("/data"):
          os.mkdir("/data")
         with open(JSON, 'a+') as json_file:
