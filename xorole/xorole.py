@@ -85,7 +85,7 @@ class XORole(BaseCog):
         try:
             f = open(JSON, 'r+')
             self.settings = json.load(f)
-            print(self.settings)
+            #print(self.settings)
         except:
             print('No settings in json file')
         
